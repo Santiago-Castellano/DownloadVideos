@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>Download Video</title>
+    <link href="{{ url_for('static', path='css/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <h1>Download Youtube</h1>
+
+    <form action="get_video" method="post">
+        <input type="text" name="url" id="">
+        <select name="only_audio" id="">
+            <option value="True">Audio</option>
+            <option value="False">Video</option>
+        </select>
+        <input type="submit" value="submit">
+    </form>
+    </body>
+</html>
