@@ -1,5 +1,7 @@
+import uvicorn
+
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
@@ -25,5 +27,7 @@ async def get_video(url: str = Form(), only_audio: bool = Form()):
         filename=file_path,
         media_type='text/mp4'
     )
-    #return JSONResponse({"file_path":file_path})
-    #return FileResponse()
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
