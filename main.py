@@ -1,3 +1,5 @@
+import tempfile
+
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -19,7 +21,7 @@ async def index(request: Request):
 
 @app.post("/get_video")
 async def get_video(url: str = Form(), only_audio: bool = Form()):
-    file_path = download(url, only_audio, "/tmp/video/")
+    file_path = download(url, only_audio, tempfile.gettempdir())
     return FileResponse(
         path=file_path,
         filename=file_path,
