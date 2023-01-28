@@ -1,5 +1,3 @@
-import uvicorn
-
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -27,7 +25,3 @@ async def get_video(url: str = Form(), only_audio: bool = Form()):
         filename=file_path,
         media_type='text/mp4'
     )
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
