@@ -1,11 +1,11 @@
 import tempfile
+from pytube import YouTube
 
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
-from downloader import download
 
 app = FastAPI()
 
@@ -21,9 +21,20 @@ async def index(request: Request):
 
 @app.post("/get_video")
 async def get_video(url: str = Form(), only_audio: bool = Form()):
-    file_path = download(url, only_audio, tempfile.gettempdir())
+    yt = YouTube(url)
+    if only_audio:
+        video = yt.streams.filter(
+            only_audio=True
+        ).first()
+    else:
+        video = yt.streams.filter(
+            file_extension="mp4",
+            only_video=True,
+        ).order_by('resolution').desc().first()
+    
+    out_file = video.download(output_path=tempfile.gettempdir())
     return FileResponse(
-        path=file_path,
-        filename=file_path,
+        path=out_file,
+        filename=out_file,
         media_type='text/mp4'
     )
