@@ -1,4 +1,5 @@
 import tempfile
+import uvicorn
 from pytube import YouTube
 
 from fastapi import FastAPI, Request, Form
@@ -38,3 +39,6 @@ async def get_video(url: str = Form(), only_audio: bool = Form()):
         filename=out_file,
         media_type='text/mp4'
     )
+
+if __name__ == "__main__":
+   uvicorn.run("main:app", host="0.0.0.0", port=8080)
